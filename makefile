@@ -1,13 +1,14 @@
+SHELL := /bin/bash
 DOCKER_COMPOSE := docker compose run
-TF := ${DOCKER_COMPOSE} terraform
+TF := $(DOCKER_COMPOSE) terraform
 
 .PHONY: init
 init:
-	${TF} init
+	$(TF) init
 
 .PHONY: lint
 lint:
-	${TF} lint
+	${TF} fmt -check -recursive
 
 .PHONY: plan
 plan:
