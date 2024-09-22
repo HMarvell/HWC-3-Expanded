@@ -20,6 +20,9 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
+            - name: Gather Details
+              run: ./scripts/boot.sh
+
             - name: Terraform Init
               run: make init
 
@@ -42,8 +45,14 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
 
+            - name: Gather Details
+              run: ./scripts/boot.sh
+
             - name: Terraform Init
               run: make init
+
+            - name : Terraform Format
+              run: make lint
 
             - name: Terraform Apply
               run: make apply
