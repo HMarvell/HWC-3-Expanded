@@ -1,5 +1,5 @@
 # HWC-3-Expanded
- Expanding on the Previous HWC-2 Repo to utilise 3 Musketeers, adapting the A Cloud Guru Sandbox to utilise Azure instances to run dockerised containers in an AKS environment. 
+ Expanding on the Previous HWC-2 Repo to utilise 3 Musketeers, adapting the A Cloud Guru Sandbox to utilise AWS instances to run dockerised containers in an EKS environment. 
 
  **User Instructions:**
 
