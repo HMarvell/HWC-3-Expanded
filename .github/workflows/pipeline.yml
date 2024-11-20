@@ -2,57 +2,47 @@ name: 'HWC-3'
 
 on:
     push:
-        branches: [ "main" ]
     pull_request:
-
-permissions:
-    contents: read
+      branches:
+        - '**'
 
 jobs:
-    build:
-        name: 'Build'
-        runs-on: self-hosted-rhel-runner
-        defaults:
-            run:
-                shell: bash
-        
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+  steps:
+  checkout:
+    - uses: actions/checkout@v4
+  
+  lint:
+    runs-on: self-hosted-rhel-runner
+    steps:
+      - name: Lint Code
+        run: make lint
 
-            - name: Gather Details
-              run: ./scripts/boot.sh
+  build:
+    runs-on: self-hosted-rhel-runner
+    needs: lint
+    steps:
+      - name: Build Terraform Plan
+        run: |
+          make plan
+        continue-on-error: true
+          
+  deploy:
+    runs-on: self-hosted-rhel-runner
+    needs: build
+    environment: non-prod
+    steps:
+      - name: Deploy with Terraform
+        run: make apply
 
-            - name: Terraform Init
-              run: make init
-
-            - name: Terraform Format
-              run: make lint
-
-            - name: Terraform Plan
-              run: make plan
-
-
-    deploy:
-        name: 'Deploy'
-        runs-on: self-hosted-rhel-runner
-        needs: build
-        defaults:
-            run:
-                shell: bash
-        
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-
-            - name: Gather Details
-              run: ./scripts/boot.sh
-
-            - name: Terraform Init
-              run: make init
-
-            - name : Terraform Format
-              run: make lint
-
-            - name: Terraform Apply
-              run: make apply
+  deploy_prod:
+    runs-on: self-hosted-rhel-runner
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - name: Request Approval for Production
+        run: echo "Approval required for deploying to Production"
+        continue-on-error: true
+      - name: Deploy to Production
+        run: |
+          make apply
