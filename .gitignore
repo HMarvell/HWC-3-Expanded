@@ -1,0 +1,9 @@
+.env
+**/.terraform/*
+**/terraform.d/*
+.terraform.d
+.terraform
+*.tfstate
+*.tfstate.*
+org/**/*tf_plan_changes
+**/terraform.plan
