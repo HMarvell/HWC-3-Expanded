@@ -5,7 +5,6 @@ resource "aws_instance" "TF-ES" {
   key_name        = "HWC-3"
   user_data       = data.template_cloudinit_config.user_scripts_ES.rendered
   security_groups = [aws_security_group.TF_security_group.name]
-  private_ip      = "172.31.13.1"
 
   tags = {
     Name = "Elastic"
@@ -19,7 +18,6 @@ resource "aws_instance" "TF-LS" {
   key_name        = "HWC-3"
   user_data       = data.template_cloudinit_config.user_scripts_LS.rendered
   security_groups = [aws_security_group.TF_security_group.name]
-  private_ip      = "172.31.13.2"
 
   tags = {
     Name = "Logstash"
