@@ -3,5 +3,5 @@
 
  **User Instructions:**
 
- 1. Update booth.sh varID and varKey with the latest ACG credentials, for the Github actions runner to pull for the latest evironment. Pushing the changes into main will kick off the latest run of the agent and then spin up the environment. 
+ 1. Update $HOME/.aws/config and $HOME/.aws/credentials with both AWS secret ID and AWS secret key updating with the latest ACG credentials, for Terraform to pull for the latest credentials. 
 
